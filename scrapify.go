@@ -2,15 +2,9 @@ package scrapify
 
 import (
 	"context"
-	"log/slog"
 	"sync"
 	"time"
 )
-
-// Logger defines a logging interface
-type Logger interface {
-	Log(level slog.Level, msg string, args ...interface{})
-}
 
 // IScraper is an interface that defines the methods required for any scraper implementation.
 // T is a generic type representing the data being scraped.
@@ -25,7 +19,6 @@ type IScraper[T any] interface {
 // Scraper represents the main structure that coordinates scraping jobs across multiple strategies.
 // It manages the scraping process, handles concurrency, and invokes a user-defined callback when data is scraped.
 type Scraper[T any] struct {
-	logger       *Logger              // Logger used for logging important events and errors.
 	strategy     []ScraperStrategy[T] // A list of scraping strategies, each with a unique configuration.
 	jobs         chan ScraperJob[T]   // Channel that holds scraping jobs to be processed.
 	ch           chan T               // Channel through which scraped data is passed.
@@ -51,9 +44,8 @@ type ScraperJob[T any] struct {
 
 // NewScraper creates a new Scraper instance.
 // logger is used for logging, s is the list of strategies to run, callback is the function that processes scraped data, and requestDelay is the optional delay between requests.
-func NewScraper[T any](logger *Logger, s []ScraperStrategy[T], callback func(T), requestDelay time.Duration) *Scraper[T] {
+func NewScraper[T any](s []ScraperStrategy[T], callback func(T), requestDelay time.Duration) *Scraper[T] {
 	return &Scraper[T]{
-		logger:       logger,
 		strategy:     s,
 		jobs:         make(chan ScraperJob[T]),
 		ch:           make(chan T),
