@@ -1,0 +1,48 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build files
+*.out
+*.test
+*.log
+
+# Output of the go coverage tool
+*.coverprofile
+
+# Application binaries
+/build/
+/bin/
+/cmd/
+
+# Configuration files generated during the build process
+*.config
+
+# Dependency directories (remove the comment if you have dependencies)
+vendor/
+
+# IDE and editor-specific files
+*.swp
+*.swo
+*.idea/
+/*.iml
+.DS_Store
+
+# Logs
+*.log
+*.log.*
+
+# Cover profile
+*.cover
+
+# Ignore local Go environment directory
+.env
+
+# Ignore the coverage output
+coverage.out
+
+# Ignore Git LFS files (if you use it)
+.lfs/
